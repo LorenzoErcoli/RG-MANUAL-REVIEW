@@ -1,0 +1,5 @@
+[
+  {"id":"Q-001","title":"Gestione dei sottopunti strutturali","prompt":"Quando devono essere inseriti o evitati i sottopunti sotto riempimenti, rasi e cordoncini? Come cambiano forma ed estensione?","sectionId":"Costruzione del ricamo","status":"open","createdAt":"2026-07-29T00:00:00.000Z"},
+  {"id":"Q-002","title":"Ritiri dei materiali di supporto","prompt":"Quali materiali di supporto ritirano maggiormente e come varia il comportamento in base a tessuto, tensione e lavorazione?","sectionId":"8.7","status":"open","createdAt":"2026-07-29T00:00:00.000Z"},
+  {"id":"Q-003","title":"Parametri per teste speciali e paillettes","prompt":"Quali parametri devono essere impostati per teste speciali o lavorazioni con paillettes e come cambiano secondo macchina, filo e materiale?","sectionId":"9.3","status":"open","createdAt":"2026-07-29T00:00:00.000Z"}
+]

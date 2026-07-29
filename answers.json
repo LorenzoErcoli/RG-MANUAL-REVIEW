@@ -1,0 +1,15 @@
+{
+  "version": "1.1",
+  "source": "Google Docs master",
+  "sections": [
+    {
+      "id": "8.8",
+      "title": "Sagome di riferimento e fissaggio dei materiali in appoggio",
+      "paragraphs": [
+        {"id":"8.8-p01","text":"Le sagome di riferimento vengono utilizzate per indicare con precisione la posizione dei materiali da applicare durante la lavorazione."},
+        {"id":"8.8-p02","text":"Sono generalmente realizzate con un’impuntura abbastanza lunga, normalmente compresa tra 2,5 e 3 mm. La lunghezza deve comunque essere adattata alla forma della sagoma."},
+        {"id":"8.8-p03","text":"La sagoma viene tracciata in corrispondenza del limite esterno del materiale in appoggio."}
+      ]
+    }
+  ]
+}
