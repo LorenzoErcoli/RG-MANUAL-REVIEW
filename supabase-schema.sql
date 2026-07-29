@@ -17,7 +17,7 @@ alter table public.review_contribution_events enable row level security;
 
 grant usage on schema public to anon, authenticated;
 revoke all on table public.review_contribution_events from anon, authenticated;
-grant insert on table public.review_contribution_events to anon, authenticated;
+grant select, insert on table public.review_contribution_events to anon, authenticated;
 grant select, insert, update, delete on table public.review_contribution_events to service_role;
 
 drop policy if exists "Public reviewers can submit contribution events" on public.review_contribution_events;
@@ -34,5 +34,12 @@ create policy "Public reviewers can submit contribution events"
     and jsonb_typeof(payload) = 'object'
   );
 
+drop policy if exists "Public reviewers can read shared note events" on public.review_contribution_events;
+create policy "Public reviewers can read shared note events"
+  on public.review_contribution_events
+  for select
+  to anon, authenticated
+  using (contribution_type = 'note');
+
 comment on table public.review_contribution_events is
-  'Append-only event log for RG Manual Review. Public clients can only insert create, update and delete events; reading and administration remain available through the Supabase dashboard or service role.';
+  'Append-only event log for RG Manual Review. Public clients can insert contribution events and read note events; administration remains available through the Supabase dashboard or service role.';
