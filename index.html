@@ -26,7 +26,13 @@
     <main>
       <section id="manualView" class="view">
         <div class="view-header"><div><p class="eyebrow">TESTO PROTETTO</p><h2>Manuale tecnico</h2><p>Il testo non può essere modificato. Le osservazioni vengono collegate al singolo paragrafo.</p></div><input id="manualSearch" class="search" type="search" placeholder="Cerca nel manuale"></div>
-        <div id="manualRoot"></div>
+        <div class="manual-layout">
+          <div id="manualRoot"></div>
+          <aside class="manual-index" aria-label="Indice del manuale">
+            <div class="manual-index-head"><p class="eyebrow">INDICE</p><h3>Capitoli e sezioni</h3></div>
+            <nav id="manualIndexRoot"></nav>
+          </aside>
+        </div>
       </section>
       <section id="questionsView" class="view hidden">
         <div class="view-header"><div><p class="eyebrow">RACCOLTA CONOSCENZA</p><h2>Domande tecniche</h2><p>Ogni domanda può ricevere risposte diverse, riferite a materiali, macchine o casi specifici.</p></div><select id="questionFilter" class="search"><option value="all">Tutte le domande</option><option value="open">Aperte</option><option value="answered">Con risposta</option></select></div>
