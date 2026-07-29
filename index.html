@@ -9,105 +9,50 @@
 </head>
 <body>
   <header class="topbar">
-    <div>
-      <p class="eyebrow">ERREGI · RICERCA & SVILUPPO</p>
-      <h1>RG Manual Review</h1>
-    </div>
-    <div class="top-actions">
-      <span id="saveState" class="save-state">Salvataggio locale attivo</span>
-      <button id="exportBtn" class="primary">Esporta contributi</button>
-      <label class="button secondary">Importa JSON<input id="importInput" type="file" accept="application/json" hidden></label>
-    </div>
+    <div><p class="eyebrow">ERREGI · RICERCA & SVILUPPO</p><h1>RG Manual Review</h1></div>
+    <div class="top-actions"><span id="saveState" class="save-state">Salvataggio locale attivo</span><button id="exportBtn" class="primary">Esporta contributi</button><label class="button secondary">Importa JSON<input id="importInput" type="file" accept="application/json" hidden></label></div>
   </header>
-
   <div class="app-shell">
     <aside class="sidebar">
       <nav>
         <button class="nav-item active" data-view="manualView">Manuale</button>
         <button class="nav-item" data-view="questionsView">Domande tecniche</button>
+        <button class="nav-item" data-view="newPartsView">Nuove parti</button>
         <button class="nav-item" data-view="contributionsView">I contributi</button>
         <button class="nav-item" data-view="guideView">Istruzioni</button>
       </nav>
-      <div class="reviewer-box">
-        <label for="reviewerName">Nome revisore</label>
-        <input id="reviewerName" placeholder="Nome e cognome">
-        <small>Il nome viene salvato solo nel browser e inserito nei contributi.</small>
-      </div>
+      <div class="reviewer-box"><label for="reviewerName">Nome revisore</label><input id="reviewerName" placeholder="Nome e cognome"><small>Il nome viene salvato solo nel browser e inserito nei contributi.</small></div>
     </aside>
-
     <main>
       <section id="manualView" class="view">
-        <div class="view-header">
-          <div>
-            <p class="eyebrow">TESTO PROTETTO</p>
-            <h2>Manuale tecnico</h2>
-            <p>Il testo non può essere modificato. Le osservazioni vengono collegate al singolo paragrafo.</p>
-          </div>
-          <input id="manualSearch" class="search" type="search" placeholder="Cerca nel manuale">
-        </div>
+        <div class="view-header"><div><p class="eyebrow">TESTO PROTETTO</p><h2>Manuale tecnico</h2><p>Il testo non può essere modificato. Le osservazioni vengono collegate al singolo paragrafo.</p></div><input id="manualSearch" class="search" type="search" placeholder="Cerca nel manuale"></div>
         <div id="manualRoot"></div>
       </section>
-
       <section id="questionsView" class="view hidden">
-        <div class="view-header">
-          <div>
-            <p class="eyebrow">RACCOLTA CONOSCENZA</p>
-            <h2>Domande tecniche</h2>
-            <p>Ogni domanda può ricevere risposte diverse, riferite a materiali, macchine o casi specifici.</p>
-          </div>
-          <select id="questionFilter" class="search"><option value="all">Tutte le domande</option><option value="open">Aperte</option><option value="answered">Con risposta</option></select>
-        </div>
+        <div class="view-header"><div><p class="eyebrow">RACCOLTA CONOSCENZA</p><h2>Domande tecniche</h2><p>Ogni domanda può ricevere risposte diverse, riferite a materiali, macchine o casi specifici.</p></div><select id="questionFilter" class="search"><option value="all">Tutte le domande</option><option value="open">Aperte</option><option value="answered">Con risposta</option></select></div>
         <div id="questionsRoot"></div>
       </section>
-
+      <section id="newPartsView" class="view hidden">
+        <div class="view-header"><div><p class="eyebrow">NUOVI CONTENUTI</p><h2>Proposte di nuove parti</h2><p>Inserisci argomenti, regole, esempi o intere sezioni che non trovano ancora posto nel manuale. Verranno valutati e riscritti successivamente.</p></div></div>
+        <form id="newPartForm" class="card">
+          <div class="form-grid"><label>Titolo provvisorio<input name="title" required placeholder="Es. Gestione dei punti raso molto lunghi"></label><label>Capitolo o area suggerita<input name="suggestedSection" placeholder="Es. Capitolo 8 oppure Nuovo capitolo"></label></div>
+          <label>Tipo di contenuto<select name="type"><option value="nuova_sezione">Nuova sezione</option><option value="nuova_regola">Nuova regola tecnica</option><option value="esempio_pratico">Esempio pratico</option><option value="caso_speciale">Caso speciale</option><option value="argomento_da_sviluppare">Argomento da sviluppare</option></select></label>
+          <label>Contenuto grezzo<textarea name="text" rows="8" required placeholder="Scrivi liberamente ciò che dovrebbe essere aggiunto. La forma finale verrà elaborata successivamente."></textarea></label>
+          <div class="form-grid"><label>Livello di certezza<select name="confidence"><option value="alta">Alta</option><option value="media" selected>Media</option><option value="bassa">Bassa / da verificare</option></select></label><label>Macchina o reparto<input name="machine" placeholder="Facoltativo"></label></div>
+          <label>Materiali, fili o condizioni coinvolte<input name="conditions" placeholder="Facoltativo"></label>
+          <div class="dialog-actions"><button class="primary" type="submit">Salva nuova parte</button></div>
+        </form>
+        <div id="newPartsRoot"></div>
+      </section>
       <section id="contributionsView" class="view hidden">
-        <div class="view-header">
-          <div><p class="eyebrow">DATI LOCALI</p><h2>I contributi</h2><p>Controlla, modifica o elimina ciò che hai inserito prima dell’esportazione.</p></div>
-          <button id="clearBtn" class="danger">Cancella dati locali</button>
-        </div>
+        <div class="view-header"><div><p class="eyebrow">DATI LOCALI</p><h2>I contributi</h2><p>Controlla o elimina ciò che hai inserito prima dell’esportazione.</p></div><button id="clearBtn" class="danger">Cancella dati locali</button></div>
         <div id="contributionsRoot"></div>
       </section>
-
-      <section id="guideView" class="view hidden">
-        <div class="guide-card">
-          <p class="eyebrow">COME FUNZIONA</p><h2>Revisione senza modificare il master</h2>
-          <ol>
-            <li>Inserisci il tuo nome nella barra laterale.</li>
-            <li>Nel manuale seleziona “Aggiungi nota” sul paragrafo interessato.</li>
-            <li>Nelle domande tecniche inserisci una risposta e specifica quanto ne sei certo.</li>
-            <li>Al termine usa “Esporta contributi” e invia il file JSON a Lorenzo.</li>
-          </ol>
-          <p><strong>Importante:</strong> i dati sono salvati nel browser utilizzato. Non sono condivisi automaticamente tra computer diversi e non modificano il Google Doc originale.</p>
-        </div>
-      </section>
+      <section id="guideView" class="view hidden"><div class="guide-card"><p class="eyebrow">COME FUNZIONA</p><h2>Revisione senza modificare il master</h2><ol><li>Inserisci il tuo nome nella barra laterale.</li><li>Nel manuale aggiungi note ai paragrafi esistenti.</li><li>Nelle domande tecniche inserisci le tue risposte.</li><li>In “Nuove parti” aggiungi contenuti che non sono ancora presenti nel manuale.</li><li>Al termine esporta il JSON e invialo a Lorenzo.</li></ol><p><strong>Importante:</strong> i dati sono salvati nel browser utilizzato e non modificano il Google Doc originale.</p></div></section>
     </main>
   </div>
-
-  <dialog id="noteDialog">
-    <form id="noteForm" method="dialog">
-      <div class="dialog-head"><div><p class="eyebrow">NOTA AL MANUALE</p><h3 id="noteTarget"></h3></div><button type="button" class="icon-btn close-dialog">×</button></div>
-      <input type="hidden" name="paragraphId"><input type="hidden" name="sectionId">
-      <label>Tipo di contributo<select name="type" required><option value="errore_tecnico">Errore tecnico</option><option value="precisazione">Precisazione</option><option value="integrazione">Integrazione</option><option value="dubbio">Dubbio</option><option value="esempio">Esempio pratico</option></select></label>
-      <label>Nota<textarea name="text" rows="6" required placeholder="Descrivi il punto da correggere o approfondire. Non riscrivere necessariamente tutto il paragrafo."></textarea></label>
-      <div class="form-grid"><label>Livello di certezza<select name="confidence"><option value="alta">Alta</option><option value="media" selected>Media</option><option value="bassa">Bassa / da verificare</option></select></label><label>Macchina o reparto<input name="machine" placeholder="Facoltativo"></label></div>
-      <label>Materiali o fili coinvolti<input name="materials" placeholder="Facoltativo, separati da virgola"></label>
-      <div class="dialog-actions"><button type="button" class="secondary close-dialog">Annulla</button><button class="primary" value="default">Salva nota</button></div>
-    </form>
-  </dialog>
-
-  <dialog id="answerDialog">
-    <form id="answerForm" method="dialog">
-      <div class="dialog-head"><div><p class="eyebrow">RISPOSTA TECNICA</p><h3 id="answerTarget"></h3></div><button type="button" class="icon-btn close-dialog">×</button></div>
-      <input type="hidden" name="questionId">
-      <label>Risposta<textarea name="text" rows="7" required placeholder="Descrivi la regola, le eccezioni e un eventuale caso pratico."></textarea></label>
-      <div class="form-grid"><label>Livello di certezza<select name="confidence"><option value="alta">Alta</option><option value="media" selected>Media</option><option value="bassa">Bassa / da verificare</option></select></label><label>Macchina<input name="machine" placeholder="Facoltativo"></label></div>
-      <label>Materiali, fili o condizioni<input name="conditions" placeholder="Facoltativo"></label>
-      <div class="dialog-actions"><button type="button" class="secondary close-dialog">Annulla</button><button class="primary" value="default">Salva risposta</button></div>
-    </form>
-  </dialog>
-
-  <script src="data/manual.js"></script>
-  <script src="data/questions.js"></script>
-  <script src="app.js"></script>
+  <dialog id="noteDialog"><form id="noteForm" method="dialog"><div class="dialog-head"><div><p class="eyebrow">NOTA AL MANUALE</p><h3 id="noteTarget"></h3></div><button type="button" class="icon-btn close-dialog">×</button></div><input type="hidden" name="paragraphId"><input type="hidden" name="sectionId"><label>Tipo di contributo<select name="type" required><option value="errore_tecnico">Errore tecnico</option><option value="precisazione">Precisazione</option><option value="integrazione">Integrazione</option><option value="dubbio">Dubbio</option><option value="esempio">Esempio pratico</option></select></label><label>Nota<textarea name="text" rows="6" required></textarea></label><div class="form-grid"><label>Livello di certezza<select name="confidence"><option value="alta">Alta</option><option value="media" selected>Media</option><option value="bassa">Bassa / da verificare</option></select></label><label>Macchina o reparto<input name="machine"></label></div><label>Materiali o fili coinvolti<input name="materials"></label><div class="dialog-actions"><button type="button" class="secondary close-dialog">Annulla</button><button class="primary" value="default">Salva nota</button></div></form></dialog>
+  <dialog id="answerDialog"><form id="answerForm" method="dialog"><div class="dialog-head"><div><p class="eyebrow">RISPOSTA TECNICA</p><h3 id="answerTarget"></h3></div><button type="button" class="icon-btn close-dialog">×</button></div><input type="hidden" name="questionId"><label>Risposta<textarea name="text" rows="7" required></textarea></label><div class="form-grid"><label>Livello di certezza<select name="confidence"><option value="alta">Alta</option><option value="media" selected>Media</option><option value="bassa">Bassa / da verificare</option></select></label><label>Macchina<input name="machine"></label></div><label>Materiali, fili o condizioni<input name="conditions"></label><div class="dialog-actions"><button type="button" class="secondary close-dialog">Annulla</button><button class="primary" value="default">Salva risposta</button></div></form></dialog>
+  <script src="data/manual.js"></script><script src="data/questions.js"></script><script src="app.js"></script>
 </body>
 </html>
