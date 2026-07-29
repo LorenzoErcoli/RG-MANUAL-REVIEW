@@ -1,0 +1,9 @@
+const QUESTIONS=[
+{id:'Q-001',sectionId:'8',title:'Gestione dei sottopunti o punti di base',prompt:'Quando devono essere inseriti o evitati i sottopunti e quale funzione svolgono nelle diverse costruzioni?',prompts:['Differenze tra riempimenti, punti raso e cordoncini.','Estensione rispetto all’oggetto principale.','Come evitare spessori o visibilità indesiderata.']},
+{id:'Q-002',sectionId:'8.7',title:'Ritiri dei materiali di supporto',prompt:'Quali materiali di supporto generano i ritiri maggiori e come cambia il comportamento in funzione del tessuto, della tensione e della lavorazione?'},
+{id:'Q-003',sectionId:'8.7',title:'Influenza della costruzione sui ritiri',prompt:'In che modo quantità di filo, densità, tipo di punto, direzione, sequenza e sovrapposizioni influenzano entità e direzione del ritiro?'},
+{id:'Q-004',sectionId:'8.7',title:'Differenze di ritiro tra le teste macchina',prompt:'Quali teste tendono a produrre spostamenti maggiori e per quali motivi tecnici?'},
+{id:'Q-005',sectionId:'8.7',title:'Differenze tra pantografo e telaio',prompt:'Come cambia il ritiro tra lavorazione a pantografo e lavorazione a telaio e quali criteri permettono di prevederlo e compensarlo?'},
+{id:'Q-006',sectionId:'9.3',title:'Parametri per teste speciali e paillettes',prompt:'Quali valori devono essere impostati per ciascuna testa speciale o lavorazione con paillettes?',prompts:['Variazioni in base al filo.','Variazioni in base al materiale.','Variazioni in base alla macchina e al tipo di lavorazione.']},
+{id:'Q-007',sectionId:'8',title:'Gestione dei punti raso troppo lunghi',prompt:'Come vengono gestiti i punti raso quando la loro lunghezza diventa rischiosa?',prompts:['Oltre quale lunghezza iniziano i problemi.','Quando il raso viene lasciato continuo e quando viene spezzato.','Come evitare una linea visibile nella divisione.','Come cambia la scelta in base a filo, materiale e larghezza.']}
+];
