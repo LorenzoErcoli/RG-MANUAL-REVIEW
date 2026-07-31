@@ -21,12 +21,36 @@
       .map(event=>cleanContribution({...event.payload,id:event.contribution_id,author:event.payload.author||event.reviewer||''}));
   }
 
+  function registerRemoteNotes(remoteNotes){
+    const remoteIds=new Set(remoteNotes.map(note=>note.id));
+
+    // Le note già presenti su Supabase non devono essere reinserite come nuove
+    // al successivo caricamento del browser.
+    remoteIds.forEach(id=>{
+      if(!state.syncedContributionIds.includes(id))state.syncedContributionIds.push(id);
+    });
+
+    // Ripulisce anche eventuali eventi create duplicati già rimasti bloccati
+    // nella coda locale da una versione precedente dell'app.
+    state.outbox=(state.outbox||[]).filter(event=>!(
+      event.contribution_type==='note'&&
+      event.action==='create'&&
+      remoteIds.has(event.contribution_id)
+    ));
+  }
+
   function mergeSharedNotes(remoteNotes){
+    registerRemoteNotes(remoteNotes);
+
     const pendingIds=pendingLocalNoteIds();
     const pendingLocal=(state.notes||[]).filter(note=>pendingIds.has(note.id));
     const pendingMap=new Map(pendingLocal.map(note=>[note.id,note]));
     const merged=new Map(remoteNotes.map(note=>[note.id,note]));
+
+    // Le note locali non ancora sincronizzate hanno precedenza temporanea,
+    // così una lettura remota non cancella ciò che l'utente sta salvando.
     pendingMap.forEach((note,id)=>merged.set(id,note));
+
     state.notes=[...merged.values()].sort((a,b)=>new Date(a.createdAt||0)-new Date(b.createdAt||0));
     persist(false);
     renderAll();
@@ -50,7 +74,14 @@
       const events=await response.json();
       mergeSharedNotes(reduceNoteEvents(Array.isArray(events)?events:[]));
       lastSharedNotesLoad=Date.now();
-      if(!(state.outbox||[]).length)setSyncState(`Note condivise aggiornate · ${new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})}`);
+
+      // Dopo aver sbloccato la coda, invia subito gli eventuali contributi reali
+      // che erano rimasti dietro a un duplicato.
+      if((state.outbox||[]).length){
+        setTimeout(()=>flushOutbox(),0);
+      }else{
+        setSyncState(`Note condivise aggiornate · ${new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})}`);
+      }
     }catch(error){
       console.error('Shared notes load failed',error);
       if(!(state.outbox||[]).length)setSyncState('Note condivise non aggiornate');
